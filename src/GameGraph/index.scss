@@ -1,0 +1,69 @@
+.game-wrapper {
+  height: 100%;
+  position: relative;
+  width: 100%;
+
+  .canvas-wrapper {
+    height: calc(100% - 60px);
+    position: relative;
+    width: 100%;
+
+    canvas {
+      outline: none;
+    }
+  }
+
+  .game-header,
+  .game-footer {
+    height: 60px;
+    width: 100%;
+    background-color: white;
+  }
+
+  .game-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #DCE3EE;
+
+    &-breadcrumb {
+      margin-left: 20px;
+    }
+
+    .operation-panels {
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+      margin-right: 10px;
+      width: 100%;
+
+      .operation-panel-left,
+      .operation-panel-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .ant-slider {
+        width: 60px;
+      }
+
+      .operation-unit {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        font-size: 12px;
+        margin-right: 10px;
+
+        &:first-child {
+          margin-left: 20px;
+        }
+        color: #549BE7;
+        &-title {
+          margin-right: 5px;
+          margin-top: 2px;
+        }
+      }
+    }
+  }
+}

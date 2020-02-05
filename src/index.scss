@@ -1,0 +1,31 @@
+.game-banner {
+  border: 1px solid #4B5668;
+  left: 20px;
+  padding: 10px;
+  position: absolute;
+  top: 85px;
+  z-index: 100;
+  color: #549BE7;
+
+  div{
+    margin-bottom: 5px;
+  }
+
+  .icon {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 2px;
+    &.healthy-icon {
+      background: #ddaa4d;
+    }
+    &.infected-icon {
+      background: #ff0000;
+    }
+    &.quarantine-icon {
+      background: #2c2da8;
+    }
+  }
+}

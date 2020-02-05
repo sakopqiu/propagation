@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "module": "esNext",
+    "target": "es5",
+    "importHelpers": true,
+    "lib": [
+      "es7",
+      "dom",
+      "es2017.object"
+    ],
+    "sourceMap": true,
+    "inlineSources": false,
+    "inlineSourceMap": false,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "downlevelIteration": true,
+    "preserveConstEnums": true,
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "*": [
+          "./node_modules/@types/*",
+          "src/*"
+        ]
+      }
+    },
+    "include": [
+      "src",
+      "types"
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  }
+}
