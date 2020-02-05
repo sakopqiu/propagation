@@ -1,3 +1,4 @@
+console.log('starting server');
 const http = require('http'),
     fs = require('fs'),
     url = require('url'),
