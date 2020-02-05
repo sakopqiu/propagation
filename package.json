@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "webpack-dev-server --open --progress --config webpack.dev.js",
     "build": "webpack --progress --config webpack.prod.js",
-    "postinstall": "yarn build",
     "start": "node server.js"
   },
   "author": {
