@@ -5,7 +5,7 @@ const http = require('http'),
     mime = require('mime');
 const fileMap = new Map();
 const Readable = require("stream").Readable;
-const port = process.env.PORT || 3000; // 前端代码端口
+const port = process.env.PORT || 5000; // 前端代码端口
 
 function writeContent(pathName, response) {
     const ext = path.extname(pathName);
