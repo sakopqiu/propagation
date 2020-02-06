@@ -23,7 +23,8 @@
     "random": "^2.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "three": "0.111.0"
+    "three": "0.111.0",
+    "mime": "^2.4.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.149",
@@ -35,7 +36,6 @@
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
-    "mime": "^2.4.4",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.3",
     "typescript": "3.4.5",
