@@ -8,10 +8,15 @@ const fileMap = new Map();
 const Readable = require("stream").Readable;
 const port = process.env.PORT || 5000; // 前端代码端口
 
+let counter = 0;
+
 function writeContent(pathName, response) {
     const ext = path.extname(pathName);
 
     const fileName = ext ? pathName : '/index.html';
+    if (fileName.indexOf('index.html') !== -1) {
+        counter++;
+    }
 
     let fileContent = fileMap.get(pathName);
     if (!fileContent) {
@@ -36,6 +41,11 @@ function writeContent(pathName, response) {
 
 let server = http.createServer((request, response) => {
     const pathName = url.parse(request.url).pathname;
+    if (request.url.indexOf('/api/count') !== -1) {
+        response.writeHead(200, {'content-type': 'application/json'});
+        response.end(JSON.stringify({counter}));
+        return;
+    }
     writeContent(pathName, response);
 });
 
