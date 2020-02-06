@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "dev": "webpack-dev-server --open --progress --config webpack.dev.js",
     "build": "webpack --progress --config webpack.prod.js",
