@@ -38,6 +38,7 @@ import {showMessage} from '../utils';
 import {observer as hookObserver} from 'mobx-react-lite';
 import {runInAction} from "mobx";
 import {AboutModal} from "./AboutModal/AboutModal";
+
 export const GameGraph = hookObserver((props: GameGraphProps) => {
     const rendererRef: React.MutableRefObject<WebGLRenderer> = useRef(null as any);
     const sceneRef: React.RefObject<Scene> = useRef(new Scene());
@@ -465,6 +466,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                             <Switch checked={state.rotate} onChange={state.setRotate.bind(state)}/>
                         </div>
                         <Button
+                            type='primary'
                             style={{marginLeft: 5}}
                             onClick={() => {
                                 if (state.isPlaying) {
@@ -492,7 +494,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                         >停止</Button>}
                         <div onClick={() => {
                             state.setModalVisible(true);
-                        }} style={{cursor: 'pointer', marginLeft: 10}}>
+                        }} style={{cursor: 'pointer', marginLeft: 20, color: 'red', fontWeight: 800}}>
                             关于
                         </div>
                     </div>

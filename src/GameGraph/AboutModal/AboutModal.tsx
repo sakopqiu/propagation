@@ -53,7 +53,13 @@ export const AboutModal = hookObserver((props: AboutModalProps) => {
                 <p>
                     本模拟程序使用的模型非常简单，和真实世界相差甚远，不能作为任何预测分析的参考依据。
                     希望通过次程序让大家明白居家隔离的强大作用。
-                    未经作者允许，请勿随意转载，也不作任何商业用途。
+                    <br/>
+                    <br/>
+                    <span style={{
+                        textDecoration: 'underline',
+                        color: 'red',
+                        fontWeight: 800
+                    }}>未经作者允许，请勿随意转载，也不作任何商业用途。</span>
                 </p>
             </div>
         </Modal>
