@@ -75,7 +75,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
     const [movingPercentage, setMovingPercentage] = React.useState(5);
 
     // 模拟进行天数，假设20天后人们才意识到
-    const [initBeds, setInitBeds] = React.useState(10);
+    const [initBeds, setInitBeds] = React.useState(30);
     // 初始感染人数
     const [initInfectedCount, setInitInfectedCount] = React.useState(10);
 
@@ -414,7 +414,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                         <div className='operation-unit'>
                             <span className='operation-unit-title'>病床数</span>
                             <Slider
-                                min={10} max={100} defaultValue={10} onAfterChange={(value: SliderValue) => {
+                                min={10} max={100} defaultValue={30} onAfterChange={(value: SliderValue) => {
                                 setInitBeds(value as number);
                                 state.stopGame();
                             }}/>
