@@ -12,7 +12,6 @@ import './index.scss';
 import {observer as hookObserver} from 'mobx-react-lite';
 import {ThreeState} from "./GameGraph/ThreeState";
 
-console.log('目前并没有打算开源，有兴趣的朋友可以发我邮件，454519934@qq.com');
 const ref = observable.object({
     state: null,
     totalNodes: 1000
@@ -92,8 +91,6 @@ const GameTest = hookObserver(function () {
             </div>
             }
             <GameGraph
-                level1Name={'测试分支'}
-                level2Name={'测试case'}
                 threeConfigs={{
                     showStats: isDebugMode(),
                     renderer: {

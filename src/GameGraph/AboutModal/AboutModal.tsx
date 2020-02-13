@@ -55,11 +55,14 @@ export const AboutModal = hookObserver((props: AboutModalProps) => {
                     希望通过次程序让大家明白居家隔离的强大作用。
                     <br/>
                     <br/>
+                    <div>
+                        源代码:&nbsp;<a target={'_blank'} href={'https://github.com/sakopqiu/propagation'}>戳这里</a>
+                    </div>
                     <span style={{
                         textDecoration: 'underline',
                         color: 'red',
                         fontWeight: 800
-                    }}>未经作者允许，请勿随意转载，也不作任何商业用途。</span>
+                    }}>未经作者允许，本程序不作任何商业用途。</span>
                 </p>
             </div>
         </Modal>

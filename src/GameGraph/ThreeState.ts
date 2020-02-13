@@ -14,6 +14,9 @@ export class ThreeState {
     @observable unwareDays: number = 30;
     @observable days: number = 0;
 
+    @observable beds: number = 10;
+    @observable initialInfectedCount: number = 20;
+
     @observable modalVisible = false;
 
     healthyMeshes: ObservableMap<number, TempMesh> = new ObservableMap<number, TempMesh>();
@@ -33,6 +36,16 @@ export class ThreeState {
     @action
     setModalVisible(val: boolean) {
         this.modalVisible = val;
+    }
+
+    @action
+    setBeds(val: number) {
+        this.beds = val;
+    }
+
+    @action
+    setInitialInfectedCount(val: number) {
+        this.initialInfectedCount = val;
     }
 
     @action
@@ -158,6 +171,11 @@ export class ThreeState {
             return '不要气馁，再来一次!';
         }
         return '未开始';
+    }
+
+    @computed
+    get isInSimulation() {
+        return this.isPlaying || this.canContinue;
     }
 
     @computed

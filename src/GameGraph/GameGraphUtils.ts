@@ -30,8 +30,6 @@ export type AllowedMaterial = MeshBasicMaterial | MeshPhongMaterial | MeshStanda
 
 export interface GameGraphProps {
     graphId: string;
-    level1Name: string;
-    level2Name: string;
     threeConfigs?: {
         showStats?: boolean; // 是否在左上角显示fps信息
         renderer?: {

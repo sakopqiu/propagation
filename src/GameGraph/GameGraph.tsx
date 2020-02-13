@@ -38,6 +38,7 @@ import {showMessage} from '../utils';
 import {observer as hookObserver} from 'mobx-react-lite';
 import {runInAction} from "mobx";
 import {AboutModal} from "./AboutModal/AboutModal";
+import {InputNumber} from "antd";
 
 export const GameGraph = hookObserver((props: GameGraphProps) => {
     const rendererRef: React.MutableRefObject<WebGLRenderer> = useRef(null as any);
@@ -62,6 +63,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
     const mainMaterial = defaultMaterial(props);
     const infMaterial = infectedMaterial(props);
     const qMaterial = quaratineMaterial(props);
+    const bedInputRef:React.RefObject<InputNumber> = React.useRef<InputNumber>(null as any);
 
     const addSphere = React.useCallback((node: ThreeNode) => {
         const mesh = new Mesh(mainGeom, mainMaterial);
@@ -71,11 +73,6 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
         scene.add(mesh);
         return mesh;
     }, []);
-
-    // 模拟进行天数，假设20天后人们才意识到
-    const [initBeds, setInitBeds] = React.useState(10);
-    // 初始感染人数
-    const [initInfectedCount, setInitInfectedCount] = React.useState(2);
 
     function quarantineNodes() {
         if (state.stillUnaware) {
@@ -97,7 +94,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                 q.material = mainMaterial;
             }
 
-            let remainingBeds = initBeds - state.qMeshes.size;
+            let remainingBeds = state.beds - state.qMeshes.size;
 
             const happySickPeople: TempMesh[] = [];
             // 用迭代器提高性能，不一下子把数组都展开
@@ -269,7 +266,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                     + Math.pow(testP.y - pos1.y, 2)
                     + Math.pow(testP.z - pos1.z, 2));
                 if (distance <= 2 * sphereSize) {
-                    console.log(healthy.id + '被感染');
+                    console.debug(healthy.id + '被感染');
                     infectedCandidates.push(healthy);
                 }
 
@@ -315,7 +312,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
         runInAction(() => {
             for (const n of stateRef.current.nodesMap.values()) {
                 const mesh = addSphere(n);
-                if (count < initInfectedCount) {
+                if (count < state.initialInfectedCount) {
                     infectNode(mesh as TempMesh);
                 } else {
                     state.healthyMeshes.set(mesh.id, mesh as TempMesh);
@@ -410,32 +407,26 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                 <div className='operation-panels'>
                     <div className='operation-panel-left'>
                         <div className='operation-unit'>
-                            <span className='operation-unit-title'>病床数</span>
-                            <Slider
-                                min={10} max={100} defaultValue={10} onAfterChange={(value: SliderValue) => {
-                                setInitBeds(value as number);
-                                state.stopGame();
-                            }}/>
-                        </div>
-                        <div className='operation-unit'>
                             <Tooltip title={'问题是第几天后开始发现的'}>
                                 <span className='operation-unit-title'>延迟(天）</span>
                             </Tooltip>
                             <Slider
-                                min={10} max={30} defaultValue={state.unwareDays} onAfterChange={(value: SliderValue) => {
-                                runInAction(() => {
-                                    state.setUnwareDays(value as number);
-                                    state.stopGame();
-                                });
-                            }}/>
+                                min={10} max={30} defaultValue={state.unwareDays}
+                                onAfterChange={(value: SliderValue) => {
+                                    runInAction(() => {
+                                        state.setUnwareDays(value as number);
+                                        state.stopGame();
+                                    });
+                                }}/>
                         </div>
                         <div className='operation-unit'>
                             <span className='operation-unit-title'>初始感染人数</span>
                             <Slider
-                                min={0} max={200} defaultValue={2} onAfterChange={(value: SliderValue) => {
-                                setInitInfectedCount(value as number);
-                                state.stopGame();
-                            }}/>
+                                min={0} max={200} defaultValue={state.initialInfectedCount}
+                                onAfterChange={(value: SliderValue) => {
+                                    state.setInitialInfectedCount(value as number);
+                                    state.stopGame();
+                                }}/>
                         </div>
                     </div>
                     <div className='operation-panel-right'>
@@ -448,14 +439,34 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                                 <Radio value={'normal'}>正常</Radio>
                             </Radio.Group>
                         </div>
+
+                        <div className='operation-unit'>
+                            <Tooltip title={'病床数在模拟开始后可以增加不能减少'}>
+                                <span style={{color: 'red'}} className='operation-unit-title'>病床数</span>
+                            </Tooltip>
+                            <InputNumber
+                                ref={bedInputRef}
+                                onFocus={()=>{
+                                    bedInputRef.current!.blur();
+                                }}
+                                min={10} max={100} value={state.beds} onChange={(value: number) => {
+                                if (state.isInSimulation && value < state.beds) {
+                                    showMessage('模拟过程中床位不得减少');
+                                } else {
+                                    state.setBeds(value as number);
+                                }
+                            }}/>
+                        </div>
+
                         <div className='operation-unit'>
                             <Tooltip title={'如果有1000个人，百分比是50，那么每个周期有1000*50%=500人在移动'}>
                                 <span style={{color: 'red'}} className='operation-unit-title'>移动人数百分比</span>
                             </Tooltip>
                             <Slider
-                                min={0} max={99} defaultValue={state.movingPercentage} onAfterChange={(value: SliderValue) => {
-                                state.setMovingPercentage(value as number);
-                            }}/>
+                                min={0} max={99} defaultValue={state.movingPercentage}
+                                onAfterChange={(value: SliderValue) => {
+                                    state.setMovingPercentage(value as number);
+                                }}/>
                         </div>
 
                         <div className='operation-unit'>
