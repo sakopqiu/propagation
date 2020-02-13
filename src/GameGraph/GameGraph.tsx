@@ -72,12 +72,10 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
         return mesh;
     }, []);
 
-    const [movingPercentage, setMovingPercentage] = React.useState(5);
-
     // 模拟进行天数，假设20天后人们才意识到
-    const [initBeds, setInitBeds] = React.useState(30);
+    const [initBeds, setInitBeds] = React.useState(10);
     // 初始感染人数
-    const [initInfectedCount, setInitInfectedCount] = React.useState(10);
+    const [initInfectedCount, setInitInfectedCount] = React.useState(2);
 
     function quarantineNodes() {
         if (state.stillUnaware) {
@@ -245,7 +243,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
         for (const child of scene.children) {
             if (child instanceof Mesh) {
                 const random = Math.random();
-                if (random < movingPercentage / 100) {
+                if (random < stateRef.current.movingPercentage / 100) {
                     const candidate = child as TempMesh;
                     moveTowardDestination(candidate);
                 }
@@ -414,7 +412,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                         <div className='operation-unit'>
                             <span className='operation-unit-title'>病床数</span>
                             <Slider
-                                min={10} max={100} defaultValue={30} onAfterChange={(value: SliderValue) => {
+                                min={10} max={100} defaultValue={10} onAfterChange={(value: SliderValue) => {
                                 setInitBeds(value as number);
                                 state.stopGame();
                             }}/>
@@ -424,7 +422,7 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                                 <span className='operation-unit-title'>延迟(天）</span>
                             </Tooltip>
                             <Slider
-                                min={10} max={30} defaultValue={20} onAfterChange={(value: SliderValue) => {
+                                min={10} max={30} defaultValue={state.unwareDays} onAfterChange={(value: SliderValue) => {
                                 runInAction(() => {
                                     state.setUnwareDays(value as number);
                                     state.stopGame();
@@ -432,19 +430,9 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                             }}/>
                         </div>
                         <div className='operation-unit'>
-                            <Tooltip title={'如果有1000个人，百分比是50，那么每个周期有1000*50%=500人在移动'}>
-                                <span className='operation-unit-title'>移动人数百分比</span>
-                            </Tooltip>
-                            <Slider
-                                min={0} max={99} defaultValue={5} onAfterChange={(value: SliderValue) => {
-                                setMovingPercentage(value as number);
-                                state.stopGame();
-                            }}/>
-                        </div>
-                        <div className='operation-unit'>
                             <span className='operation-unit-title'>初始感染人数</span>
                             <Slider
-                                min={0} max={200} defaultValue={10} onAfterChange={(value: SliderValue) => {
+                                min={0} max={200} defaultValue={2} onAfterChange={(value: SliderValue) => {
                                 setInitInfectedCount(value as number);
                                 state.stopGame();
                             }}/>
@@ -459,6 +447,15 @@ export const GameGraph = hookObserver((props: GameGraphProps) => {
                                 <Radio value={'slow'}>慢</Radio>
                                 <Radio value={'normal'}>正常</Radio>
                             </Radio.Group>
+                        </div>
+                        <div className='operation-unit'>
+                            <Tooltip title={'如果有1000个人，百分比是50，那么每个周期有1000*50%=500人在移动'}>
+                                <span style={{color: 'red'}} className='operation-unit-title'>移动人数百分比</span>
+                            </Tooltip>
+                            <Slider
+                                min={0} max={99} defaultValue={state.movingPercentage} onAfterChange={(value: SliderValue) => {
+                                state.setMovingPercentage(value as number);
+                            }}/>
                         </div>
 
                         <div className='operation-unit'>

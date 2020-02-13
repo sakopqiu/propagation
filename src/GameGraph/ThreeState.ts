@@ -9,8 +9,9 @@ export class ThreeState {
     @observable speed: string = 'normal';
     @observable canContinue: boolean = false;
     @observable isPlaying: boolean = false;
+    @observable movingPercentage: number = 90;
     // 游戏开始，但检测系统还未发现出现问题的潜伏天数
-    @observable unwareDays: number = 20;
+    @observable unwareDays: number = 30;
     @observable days: number = 0;
 
     @observable modalVisible = false;
@@ -52,6 +53,11 @@ export class ThreeState {
     @action
     setCanContinue(val: boolean) {
         this.canContinue = val;
+    }
+
+    @action
+    setMovingPercentage(val: number) {
+        this.movingPercentage = val;
     }
 
     @action
@@ -126,7 +132,7 @@ export class ThreeState {
 
     @computed
     get speedFactor() {
-        return this.speed === 'slow' ? .5 : 1;
+        return this.speed === 'slow' ? .3 : 1;
     }
 
     @computed
