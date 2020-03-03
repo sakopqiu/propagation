@@ -58,11 +58,6 @@ export const AboutModal = hookObserver((props: AboutModalProps) => {
                     <div>
                         源代码:&nbsp;<a target={'_blank'} href={'https://github.com/sakopqiu/propagation'}>戳这里</a>
                     </div>
-                    <span style={{
-                        textDecoration: 'underline',
-                        color: 'red',
-                        fontWeight: 800
-                    }}>未经作者允许，本程序不作任何商业用途。</span>
                 </p>
             </div>
         </Modal>
